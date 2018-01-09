@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+const users = require('./routers/users.js');
 
 // ----------------------------------------
 // App Variables
@@ -26,10 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // ----------------------------------------
 // Sessions/Cookies
 // ----------------------------------------
-const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 
-app.use(cookieParser());
 app.use(cookieSession({
   name: 'session',
   keys: [
@@ -81,9 +79,7 @@ app.use(express.static(`${__dirname}/public`));
 // Logging
 // ----------------------------------------
 const morgan = require('morgan');
-const morganToolkit = require('morgan-toolkit')(morgan, {
-  req: ['cookies'/*, 'signedCookies' */]
-});
+const morganToolkit = require('morgan-toolkit')(morgan);
 
 app.use(morganToolkit());
 
@@ -91,6 +87,9 @@ app.use(morganToolkit());
 // ----------------------------------------
 // Routes
 // ----------------------------------------
+
+app.use('/users', users);
+
 app.use('/', (req, res) => {
   req.flash('Hi!');
   res.render('welcome/index');

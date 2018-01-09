@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const users = require('./routers/users.js');
+
 
 // ----------------------------------------
 // App Variables
@@ -87,6 +87,7 @@ app.use(morganToolkit());
 // ----------------------------------------
 // Routes
 // ----------------------------------------
+const users = require('./routers/users.js');
 
 app.use('/users', users);
 
